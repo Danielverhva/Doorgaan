@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="static/style.css">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+<div class="signup-form">
+    <form action="/login" method="post">
+        <label for="gebruikersNaam">Gebruikersnaam:</label>
+    <input type="text" name="gebruikersNaam" required>
+
+<label for="email">Email:</label>
+    <input type="email" name="email" required>
+
+<label for="voorNaam">Voor Naam:</label>
+    <input type="text" name="voorNaam" required>
+<label for="achterNaam">Achter Naam:</label>
+    <input type="text" name="achterNaam" required>
+
+<label for="telefoon">Telefoon Nummer:</label>
+    <input type="tel" name="telefoon" required>
+
+    <label for="gd">Geborte Datum:</label>
+    <input type="date" name="gd" required>
+
+    <label for="adres">Adres:</label>
+    <input type="text" name="adres" required>
+
+    <label for="wachtwoord">Wachtwoord:</label>
+    <input type="password" name="wachtwoord" required>
+    <label for="bevestigWachtwoord">Bevestig Wachtwoord:</label>
+    <input type="password" name="bevestigWachtwoord" required>
+    
+    <button type="submit" >Sign Up</button>
+</form>
+</div>
+
+</body>
+</html>

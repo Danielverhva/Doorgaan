@@ -4,15 +4,25 @@ const port = 8000
 
 app.use(express.static('public-lobby'))
 
-app.get('/', (req, res) => {
+
+app
+ .set('view engine', 'ejs')
+ .set('views', __dirname + '/view')
+
+ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public-lobby/index.html')
 })
 
+app.get('/login', (req, res) => {
 
-
-app.get('/log-in', (req, res) => {
-  res.send('Hier kan je in loggen')
+  res.render('accountmaken.ejs', { account: account })
 })
+
+
+ 
+//   res.render('detail.ejs', { account: account })
+
+
 app.use((req, res, next) => {
   res.status(404).send("Sorry can't find that!")
 })
