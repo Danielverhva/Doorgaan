@@ -3,6 +3,7 @@ const app = express()
 const port = 8000
 
 app.use(express.static('public-lobby'))
+app.use(express.urlencoded({ extended: true }))
 
 
 app
@@ -14,8 +15,20 @@ app
 })
 
 app.get('/login', (req, res) => {
+  res.render('accountmaken.ejs')
+})
 
-  res.render('accountmaken.ejs', { account: account })
+app.post('/detail', (req, res) => {
+req.body.gebruikersNaam
+req.body.email
+req.body.voorNaam
+req.body.achterNaam
+req.body.telefoon
+req.body.gd
+req.body.adres
+req.body.wachtwoord
+console.log(req.body)
+  res.render('detail.ejs' , { account: req.body })
 })
 
 
