@@ -1,4 +1,5 @@
 require('dotenv').config() 
+const bcrypt = require('bcrypt')
 const express = require('express')
 const app = express()
 const port = 8000
@@ -45,10 +46,17 @@ req.body.adres
 req.body.wachtwoord
 console.log(req.body)
 
- await usersCollection.insertOne(userData);
-  res.render('detail.ejs' , { account: userData })
+ bcrypt.hash(userData.wachtwoord, 10)
+  .then(hashedPassword => {
+    userData.wachtwoord = hashedPassword;
+    usersCollection.insertOne(userData);
+    res.render('detail.ejs', { account: userData });
+  })
+  .catch(err => {
+    console.error('Error hashing password:', err);
+    res.status(500).send('Error creating account');
+  });
 })
-
 
  
 //   res.render('detail.ejs', { account: account })
