@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const port = 8000
 
+
 app.use(express.static('public-lobby'))
 app.use(express.urlencoded({ extended: true }))
 
@@ -30,36 +31,45 @@ const usersCollection = db.collection('Users')
   res.sendFile(__dirname + '/public-lobby/index.html')
 })
 
-app.get('/login', (req, res) => {
+app.get('/accountmaken', (req, res) => {
   res.render('accountmaken.ejs')
 })
 
 app.post('/detail', async(req, res) => {
-  const userData = req.body;
-req.body.gebruikersNaam
-req.body.email
-req.body.voorNaam
-req.body.achterNaam
-req.body.telefoon
-req.body.gd
-req.body.adres
-req.body.wachtwoord
-console.log(req.body)
-
- bcrypt.hash(userData.wachtwoord, 10)
-  .then(hashedPassword => {
+  try { const userData = req.body;
+  if (userData.wachtwoord !== userData.confirmWachtwoord) 
+    { return res.status(400).send("Wachtwoorden komen niet overeen"); }
+  
+    const hashedPassword = await bcrypt.hash(userData.wachtwoord, 10); 
     userData.wachtwoord = hashedPassword;
-    usersCollection.insertOne(userData);
-    res.render('detail.ejs', { account: userData });
-  })
-  .catch(err => {
-    console.error('Error hashing password:', err);
+    
+    const result = await usersCollection.insertOne(userData);
+    
+    res.render('detail.ejs', { account: userData, id: result.insertedId });
+  } catch(err) {
+    console.error('Error creating account:', err);
     res.status(500).send('Error creating account');
-  });
+  }
 })
+app.get('/dashboard', async (req, res) => {
+  const accountId = req.query.id;
 
- 
-//   res.render('detail.ejs', { account: account })
+  const account = await usersCollection.findOne({
+    _id: new ObjectId(accountId)
+  });
+
+  if (!account) {
+    return res.status(404).send("Account not found");
+  }
+
+  res.render('dashboard.ejs', { account });
+});
+
+
+  
+
+
+
 
 
 app.use((req, res, next) => {
