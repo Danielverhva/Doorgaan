@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <container>
+    <h1>Account Details</h1>
+    <form action="/update" method="POST">
+  <input type="hidden" name="id" value="<%= account._id %>">
+
+  <label>Gebruikersnaam</label>
+  <input type="text" name="gebruikersNaam" value="<%= account.gebruikersNaam %>" required>
+
+  <label>Email</label>
+  <input type="email" name="email" value="<%= account.email %>" required>
+
+  <label>Telefoon</label>
+  <input type="text" name="telefoon" value="<%= account.telefoon %>">
+
+  <label>Nieuw wachtwoord (optioneel)</label>
+  <input type="password" name="newPassword">
+
+  <label>Bevestig nieuw wachtwoord</label>
+  <input type="password" name="confirmNewPassword">
+
+  <button type="submit">Opslaan</button>
+</form>
+
+    </container>
+</body>
+</html>
